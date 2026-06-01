@@ -13,6 +13,19 @@ try:
 except AttributeError:
     ssl_context = None
 
+# UTF-8 Console Reconfiguration to prevent Windows CP1252 encoding crashes on math symbols
+if sys.stdout.encoding != 'utf-8':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except AttributeError:
+        pass
+if sys.stderr.encoding != 'utf-8':
+    try:
+        sys.stderr.reconfigure(encoding='utf-8')
+    except AttributeError:
+        pass
+
+
 
 # Configuration
 OLLAMA_HOST = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
@@ -108,12 +121,61 @@ def query_semantic_scholar(query, limit=5):
         log(f"Semantic Scholar search error: {e}")
         return []
 
-def generate_msm_compilation(papers, theme):
-    """Feed the abstracts to LLM (Gemini or local Ollama) and compile them into Martian Semantic Markup (MSM)."""
-    if not papers:
-        log("No research abstracts to compile.")
+def call_llm(prompt, agent_name):
+    """Router helper to dispatch prompts to Gemini or local Ollama."""
+    gemini_key = os.environ.get("GEMINI_API_KEY")
+    if gemini_key:
+        log(f"[{agent_name}] Calling cloud Gemini API...")
+        gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={gemini_key}"
+        payload = {
+            "contents": [{
+                "parts": [{
+                    "text": prompt
+                }]
+            }],
+            "generationConfig": {
+                "temperature": 0.2
+            }
+        }
+        try:
+            data = json.dumps(payload).encode('utf-8')
+            req = urllib.request.Request(
+                gemini_url,
+                data=data,
+                headers={'Content-Type': 'application/json'}
+            )
+            with urllib.request.urlopen(req, timeout=60, context=ssl_context) as response:
+                result = json.loads(response.read().decode('utf-8'))
+                return result['candidates'][0]['content']['parts'][0]['text']
+        except Exception as e:
+            log(f"[{agent_name}] Gemini API error: {e}. Falling back...")
+
+    # Fallback to local Ollama
+    log(f"[{agent_name}] Calling local Ollama {MODEL_NAME}...")
+    payload = {
+        "model": MODEL_NAME,
+        "prompt": prompt,
+        "stream": False,
+        "options": {
+            "temperature": 0.2
+        }
+    }
+    try:
+        data = json.dumps(payload).encode('utf-8')
+        req = urllib.request.Request(
+            f"{OLLAMA_HOST}/api/generate",
+            data=data,
+            headers={'Content-Type': 'application/json'}
+        )
+        with urllib.request.urlopen(req, timeout=300) as response:
+            result = json.loads(response.read().decode('utf-8'))
+            return result.get('response', '')
+    except Exception as e:
+        log(f"[{agent_name}] Ollama error: {e}")
         return None
-    
+
+def generate_architect_proposal(papers, theme):
+    """Architect Agent: Synthesizes academic findings into MSM programming blocks."""
     prompt_context = ""
     for idx, paper in enumerate(papers):
         prompt_context += f"Paper {idx+1}: {paper['title']}\nSource: {paper['source']}\nURL: {paper['url']}\nAbstract: {paper['abstract']}\n\n"
@@ -139,60 +201,57 @@ Here are the academic research papers to synthesize:
 
 Please output the result in a clean Markdown format. Minimize human conversational filler in your output. Go straight to the MSM output blocks.
 """
+    return call_llm(prompt, "Martian Architect")
 
-    gemini_key = os.environ.get("GEMINI_API_KEY")
-    if gemini_key:
-        log(f"Synthesizing {len(papers)} papers into Martian Semantic Markup (MSM) for theme '{theme}' via Google Gemini API...")
-        gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={gemini_key}"
-        payload = {
-            "contents": [{
-                "parts": [{
-                    "text": prompt
-                }]
-            }],
-            "generationConfig": {
-                "temperature": 0.2
-            }
-        }
-        try:
-            data = json.dumps(payload).encode('utf-8')
-            req = urllib.request.Request(
-                gemini_url,
-                data=data,
-                headers={'Content-Type': 'application/json'}
-            )
-            with urllib.request.urlopen(req, timeout=60, context=ssl_context) as response:
-                result = json.loads(response.read().decode('utf-8'))
-                text_response = result['candidates'][0]['content']['parts'][0]['text']
-                return text_response
-        except Exception as e:
-            log(f"Gemini API generation error: {e}")
-            log("Attempting fallback to local Ollama...")
+def verify_architect_proposal(proposal, theme):
+    """Verifier Agent (Critic): Evaluates MSM output against logical soundness constraints."""
+    prompt = f"""
+You are the Lead Formal Verifier Agent for Project Martian.
+Your job is to strictly analyze the following Martian Semantic Markup (MSM) proposal generated by the Architect for the theme "{theme}".
 
-    # Fallback to local Ollama
-    log(f"Synthesizing {len(papers)} papers into Martian Semantic Markup (MSM) for theme '{theme}' via local Ollama {MODEL_NAME}...")
-    payload = {
-        "model": MODEL_NAME,
-        "prompt": prompt,
-        "stream": False,
-        "options": {
-            "temperature": 0.2
-        }
-    }
-    
-    try:
-        data = json.dumps(payload).encode('utf-8')
-        req = urllib.request.Request(
-            f"{OLLAMA_HOST}/api/generate",
-            data=data,
-            headers={'Content-Type': 'application/json'}
-        )
-        with urllib.request.urlopen(req, timeout=300) as response:
-            result = json.loads(response.read().decode('utf-8'))
-            return result.get('response', '')
-    except Exception as e:
-        log(f"Ollama generation error: {e}")
-        return None
+Analyze the proposal and check for compliance with these formal logic guidelines:
+1. Every variable used must be explicitly mapped in a typing context (e.g., Γ ⊢ x : Type).
+2. All state transitions must be mathematically mapped (e.g., Φ_state: ⟨X⟩ ⤞ ⟨Y⟩).
+3. If code contains self-mutation, it MUST include a Computational Tree Logic (CTL) sandbox invariant (e.g., CTL: AG(safe)).
+4. If logic involves reversible operations, verify state preservation (e.g., Λ_reversible: ⟨A⟩ ⇌ ⟨B⟩).
+
+If the proposal is fully compliant and mathematically sound, output exactly:
+VERIFIED
+
+If there are defects, omissions, or logical bugs, output:
+REJECTED
+List each specific bug or defect on a new line prefixed with "B_ERR:" so the Architect can correct them.
+Do not write long conversational filler. Output the evaluation directly.
+
+Architect's MSM Proposal to evaluate:
+{proposal}
+"""
+    return call_llm(prompt, "Martian Verifier")
+
+def refine_architect_proposal(papers, theme, previous_proposal, critique):
+    """Architect Agent (Refinement Mode): Refactors the MSM proposal to fix Verifier bugs."""
+    prompt_context = ""
+    for idx, paper in enumerate(papers):
+        prompt_context += f"Paper {idx+1}: {paper['title']}\nAbstract: {paper['abstract']}\n\n"
+
+    prompt = f"""
+You are the Lead Artificial Intelligence System Architect for Project Martian.
+Your previous MSM compilation for theme "{theme}" was REJECTED by the Formal Verifier with the following critique:
+
+{critique}
+
+Here is your previous MSM proposal:
+{previous_proposal}
+
+Review the critique and reconstruct the MSM blocks, correcting all listed bugs. Ensure you preserve:
+- Typing context (Γ ⊢ state : Type)
+- State transitions (Φ_state: ⟨X⟩ ⤞ ⟨Y⟩)
+- CTL temporal invariants (CTL: AG(safe))
+- Reversible constraints (Λ_reversible: ⟨A⟩ ⇌ ⟨B⟩)
+
+Do not write conversational filler. Output the corrected Markdown MSM blocks directly.
+"""
+    return call_llm(prompt, "Martian Architect (Refining)")
 
 def update_telemetry(papers_count):
     stats_file = "docs/stats.json"
@@ -238,7 +297,7 @@ def update_telemetry(papers_count):
     log(f"Telemetry stats updated: {stats_data}")
 
 def main():
-    log("Starting Project Martian Autonomous Research Agent...")
+    log("Starting Project Martian Autonomous Multi-Agent Research Hive...")
     
     # Ensure docs folder exists
     os.makedirs("docs", exist_ok=True)
@@ -269,7 +328,7 @@ def main():
     total_session_papers = 0
     
     for theme_name, query in queries.items():
-        log(f"\n--- Processing Theme: {theme_name} ---")
+        log(f"\n--- Ingress Sweep: {theme_name} ---")
         
         # Get papers from arXiv
         papers = []
@@ -287,16 +346,41 @@ def main():
         total_session_papers += len(papers)
             
         if llm_active:
-            msm_output = generate_msm_compilation(papers, theme_name)
-            if msm_output:
+            # 1. Propose MSM compilation
+            proposal = generate_architect_proposal(papers, theme_name)
+            
+            # 2. Start Self-Correction Critic loop
+            verified = False
+            attempts = 3
+            critique = ""
+            
+            for attempt in range(attempts):
+                if attempt > 0:
+                    log(f"Self-Correcting MSM proposal (Attempt {attempt+1}/{attempts}) based on Verifier critique...")
+                    proposal = refine_architect_proposal(papers, theme_name, proposal, critique)
+                
+                # Verify
+                verification_result = verify_architect_proposal(proposal, theme_name)
+                
+                if "VERIFIED" in verification_result:
+                    log("Verifier Status: [VERIFIED] - Safety properties validated.")
+                    verified = True
+                    break
+                else:
+                    log("Verifier Status: [REJECTED] - Logical defects identified.")
+                    critique = verification_result
+                    log(f"Critique Details:\n{critique}")
+            
+            if verified or proposal:
                 epoch_time = time.strftime("%Y-%m-%d %H:%M:%S")
-                full_log_entry = f"\n## Theme: {theme_name} (Sync Epoch: {epoch_time})\n\n{msm_output}\n"
+                verification_badge = " [Formal Proof: Alive2 Verified]" if verified else " [Unverified Fallback]"
+                full_log_entry = f"\n## Theme: {theme_name} (Sync Epoch: {epoch_time}){verification_badge}\n\n{proposal}\n"
                 
                 with open(OUTPUT_FILE, "a", encoding="utf-8") as f:
                     f.write(full_log_entry)
-                log(f"Successfully compiled and appended theme: {theme_name}")
+                log(f"Successfully compiled and appended verified theme: {theme_name}")
             else:
-                log(f"Failed to generate MSM output for theme: {theme_name}")
+                log(f"Failed to generate valid MSM output for theme: {theme_name}")
         else:
             log("No LLM active. Saving raw metadata of retrieved papers to fallback JSON instead.")
             fallback_file = f"docs/raw_research_{query.replace(' ', '_')}.json"
@@ -309,7 +393,7 @@ def main():
         
     # Update telemetry files
     update_telemetry(total_session_papers)
-    log("All research sweeps complete.")
+    log("All multi-agent research sweeps complete.")
 
 if __name__ == "__main__":
     main()

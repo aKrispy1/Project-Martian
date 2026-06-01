@@ -1,0 +1,56 @@
+name: Interactive Gemini Collaborator
+
+on:
+  issue_comment:
+    types: [created]
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
+
+jobs:
+  collaborate:
+    # Trigger only if a comment contains '@gemini-cli' or if a new issue tags '@gemini-cli'
+    if: |
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@gemini-cli')) ||
+      (github.event_name == 'issues' && contains(github.event.issue.body, '@gemini-cli'))
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository Context
+      uses: actions/checkout@v4
+
+    - name: Run Gemini Agent
+      id: gemini
+      uses: google-github-actions/run-gemini-cli@v1
+      with:
+        gemini-api-key: ${{ secrets.GEMINI_API_KEY }}
+        # We feed it the codebase files as context by listing docs and code files
+        prompt: |
+          You are the Lead Artificial Intelligence System Architect for Project Martian.
+          Your task is to collaborate with human developers to design an alien, AI-native programming language.
+          
+          Here is the user's input:
+          "${{ github.event.comment.body || github.event.issue.body }}"
+          
+          Answer their request precisely, mathematically, and in alignment with the existing project documentation:
+          - Use Martian Semantic Markup (MSM) syntax if writing code fragments.
+          - Follow formal verification principles (Alive2 / CTL bounds).
+          - Limit natural human conversation. Go straight to the structural logical response.
+
+    - name: Post AI Response in Thread
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const response = `${{ steps.gemini.outputs.text || steps.gemini.outputs.response }}`;
+          const issue_number = context.issue.number;
+          github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: issue_number,
+            body: `🛸 **[Martian Architect Agent Response]**\n\n${response}`
+          });
