@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 
 const OWNER = 'aKrispy1';
 const REPO = 'Project-Martian';
@@ -308,6 +309,7 @@ export default function App() {
         <div>🔒 CTL Sandboxed Programmatic Safe Execution.</div>
         <div>Last Crawl Epoch: {stats.last_sync_epoch} UTC</div>
       </footer>
+      <Analytics />
     </div>
   );
 }
