@@ -9,13 +9,20 @@ local_research_db/
 .cache/
 .ipynb_checkpoints/
 
-# Environments
+# Environments & Node Dependencies
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 .venv
 venv/
 ENV/
 env/
 research_env/
+node_modules/
+/visualizer/node_modules/
+/visualizer/dist/
 
 # Temp files
 tier1_research.txt
