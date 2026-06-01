@@ -1,0 +1,475 @@
+{
+  "temperature_k": 293.15,
+  "total_cycles": 10000,
+  "irreversible": {
+    "total_bits_erased": 24000.0,
+    "total_energy_dissipated_joules": 6.733019681287426e-17,
+    "total_energy_dissipated_ev": 420.242029379326
+  },
+  "reversible": {
+    "total_bits_erased": 0.0,
+    "total_energy_dissipated_joules": 0.0,
+    "total_energy_dissipated_ev": 0.0
+  },
+  "simulation_curve": [
+    {
+      "cycle": 1,
+      "irreversible_bits": 2.4,
+      "irreversible_energy_j": 6.733019681286622e-21,
+      "irreversible_energy_ev": 0.042024202937927586,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 200,
+      "irreversible_bits": 480.0,
+      "irreversible_energy_j": 1.3466039362573196e-18,
+      "irreversible_energy_ev": 8.404840587585486,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 400,
+      "irreversible_bits": 960.0,
+      "irreversible_energy_j": 2.6932078725146316e-18,
+      "irreversible_energy_ev": 16.809681175170926,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 600,
+      "irreversible_bits": 1440.0,
+      "irreversible_energy_j": 4.0398118087719986e-18,
+      "irreversible_energy_ev": 25.214521762756707,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 800,
+      "irreversible_bits": 1920.0,
+      "irreversible_energy_j": 5.386415745029374e-18,
+      "irreversible_energy_ev": 33.61936235034254,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 1000,
+      "irreversible_bits": 2400.0,
+      "irreversible_energy_j": 6.733019681286749e-18,
+      "irreversible_energy_ev": 42.02420293792837,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 1200,
+      "irreversible_bits": 2880.0,
+      "irreversible_energy_j": 8.079623617544123e-18,
+      "irreversible_energy_ev": 50.4290435255142,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 1400,
+      "irreversible_bits": 3360.0,
+      "irreversible_energy_j": 9.4262275538015e-18,
+      "irreversible_energy_ev": 58.83388411310005,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 1600,
+      "irreversible_bits": 3840.0,
+      "irreversible_energy_j": 1.0772831490058874e-17,
+      "irreversible_energy_ev": 67.23872470068588,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 1800,
+      "irreversible_bits": 4320.0,
+      "irreversible_energy_j": 1.2119435426316132e-17,
+      "irreversible_energy_ev": 75.64356528827098,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 2000,
+      "irreversible_bits": 4800.0,
+      "irreversible_energy_j": 1.3466039362573253e-17,
+      "irreversible_energy_ev": 84.04840587585522,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 2200,
+      "irreversible_bits": 5280.0,
+      "irreversible_energy_j": 1.481264329883037e-17,
+      "irreversible_energy_ev": 92.45324646343946,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 2400,
+      "irreversible_bits": 5760.0,
+      "irreversible_energy_j": 1.6159247235087492e-17,
+      "irreversible_energy_ev": 100.8580870510237,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 2600,
+      "irreversible_bits": 6240.0,
+      "irreversible_energy_j": 1.7505851171344613e-17,
+      "irreversible_energy_ev": 109.26292763860793,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 2800,
+      "irreversible_bits": 6720.0,
+      "irreversible_energy_j": 1.8852455107601733e-17,
+      "irreversible_energy_ev": 117.66776822619218,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 3000,
+      "irreversible_bits": 7200.0,
+      "irreversible_energy_j": 2.0199059043858853e-17,
+      "irreversible_energy_ev": 126.07260881377643,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 3200,
+      "irreversible_bits": 7680.0,
+      "irreversible_energy_j": 2.1545662980115974e-17,
+      "irreversible_energy_ev": 134.47744940136067,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 3400,
+      "irreversible_bits": 8160.0,
+      "irreversible_energy_j": 2.2892266916373094e-17,
+      "irreversible_energy_ev": 142.8822899889449,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 3600,
+      "irreversible_bits": 8640.0,
+      "irreversible_energy_j": 2.4238870852630218e-17,
+      "irreversible_energy_ev": 151.2871305765292,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 3800,
+      "irreversible_bits": 9120.0,
+      "irreversible_energy_j": 2.558547478888734e-17,
+      "irreversible_energy_ev": 159.69197116411343,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 4000,
+      "irreversible_bits": 9600.0,
+      "irreversible_energy_j": 2.693207872514446e-17,
+      "irreversible_energy_ev": 168.09681175169766,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 4200,
+      "irreversible_bits": 10080.0,
+      "irreversible_energy_j": 2.827868266140158e-17,
+      "irreversible_energy_ev": 176.50165233928192,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 4400,
+      "irreversible_bits": 10560.0,
+      "irreversible_energy_j": 2.96252865976587e-17,
+      "irreversible_energy_ev": 184.90649292686612,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 4600,
+      "irreversible_bits": 11040.0,
+      "irreversible_energy_j": 3.097189053391582e-17,
+      "irreversible_energy_ev": 193.3113335144504,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 4800,
+      "irreversible_bits": 11520.0,
+      "irreversible_energy_j": 3.231849447017294e-17,
+      "irreversible_energy_ev": 201.7161741020346,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 5000,
+      "irreversible_bits": 12000.0,
+      "irreversible_energy_j": 3.366509840643006e-17,
+      "irreversible_energy_ev": 210.12101468961887,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 5200,
+      "irreversible_bits": 12480.0,
+      "irreversible_energy_j": 3.501170234268718e-17,
+      "irreversible_energy_ev": 218.5258552772031,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 5400,
+      "irreversible_bits": 12960.0,
+      "irreversible_energy_j": 3.63583062789443e-17,
+      "irreversible_energy_ev": 226.93069586478737,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 5600,
+      "irreversible_bits": 13440.0,
+      "irreversible_energy_j": 3.770491021520142e-17,
+      "irreversible_energy_ev": 235.3355364523716,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 5800,
+      "irreversible_bits": 13920.0,
+      "irreversible_energy_j": 3.9051514151458543e-17,
+      "irreversible_energy_ev": 243.74037703995586,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 6000,
+      "irreversible_bits": 14400.0,
+      "irreversible_energy_j": 4.039811808771566e-17,
+      "irreversible_energy_ev": 252.1452176275401,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 6200,
+      "irreversible_bits": 14880.0,
+      "irreversible_energy_j": 4.1744722023972784e-17,
+      "irreversible_energy_ev": 260.55005821512435,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 6400,
+      "irreversible_bits": 15360.0,
+      "irreversible_energy_j": 4.30913259602299e-17,
+      "irreversible_energy_ev": 268.95489880270856,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 6600,
+      "irreversible_bits": 15840.0,
+      "irreversible_energy_j": 4.4437929896487025e-17,
+      "irreversible_energy_ev": 277.3597393902928,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 6800,
+      "irreversible_bits": 16320.0,
+      "irreversible_energy_j": 4.578453383274414e-17,
+      "irreversible_energy_ev": 285.7645799778771,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 7000,
+      "irreversible_bits": 16800.0,
+      "irreversible_energy_j": 4.7131137769002154e-17,
+      "irreversible_energy_ev": 294.16942056546685,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 7200,
+      "irreversible_bits": 17280.0,
+      "irreversible_energy_j": 4.8477741705260294e-17,
+      "irreversible_energy_ev": 302.5742611530575,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 7400,
+      "irreversible_bits": 17760.0,
+      "irreversible_energy_j": 4.9824345641518435e-17,
+      "irreversible_energy_ev": 310.9791017406481,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 7600,
+      "irreversible_bits": 18240.0,
+      "irreversible_energy_j": 5.1170949577776575e-17,
+      "irreversible_energy_ev": 319.3839423282387,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 7800,
+      "irreversible_bits": 18720.0,
+      "irreversible_energy_j": 5.2517553514034716e-17,
+      "irreversible_energy_ev": 327.7887829158293,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 8000,
+      "irreversible_bits": 19200.0,
+      "irreversible_energy_j": 5.3864157450292856e-17,
+      "irreversible_energy_ev": 336.19362350341993,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 8200,
+      "irreversible_bits": 19680.0,
+      "irreversible_energy_j": 5.5210761386550997e-17,
+      "irreversible_energy_ev": 344.5984640910105,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 8400,
+      "irreversible_bits": 20160.0,
+      "irreversible_energy_j": 5.655736532280914e-17,
+      "irreversible_energy_ev": 353.0033046786011,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 8600,
+      "irreversible_bits": 20640.0,
+      "irreversible_energy_j": 5.790396925906728e-17,
+      "irreversible_energy_ev": 361.40814526619175,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 8800,
+      "irreversible_bits": 21120.0,
+      "irreversible_energy_j": 5.925057319532542e-17,
+      "irreversible_energy_ev": 369.8129858537824,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 9000,
+      "irreversible_bits": 21600.0,
+      "irreversible_energy_j": 6.059717713158356e-17,
+      "irreversible_energy_ev": 378.21782644137295,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 9200,
+      "irreversible_bits": 22080.0,
+      "irreversible_energy_j": 6.19437810678417e-17,
+      "irreversible_energy_ev": 386.6226670289636,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 9400,
+      "irreversible_bits": 22560.0,
+      "irreversible_energy_j": 6.329038500409984e-17,
+      "irreversible_energy_ev": 395.0275076165542,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 9600,
+      "irreversible_bits": 23040.0,
+      "irreversible_energy_j": 6.463698894035798e-17,
+      "irreversible_energy_ev": 403.4323482041448,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 9800,
+      "irreversible_bits": 23520.0,
+      "irreversible_energy_j": 6.598359287661612e-17,
+      "irreversible_energy_ev": 411.8371887917354,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    },
+    {
+      "cycle": 10000,
+      "irreversible_bits": 24000.0,
+      "irreversible_energy_j": 6.733019681287426e-17,
+      "irreversible_energy_ev": 420.242029379326,
+      "reversible_bits": 0.0,
+      "reversible_energy_j": 0.0,
+      "reversible_energy_ev": 0.0
+    }
+  ]
+}
