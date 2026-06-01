@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Vector DB & Cache
+local_research_db/
+.cache/
+.ipynb_checkpoints/
+
+# Environments
+.env
+.venv
+venv/
+ENV/
+env/
+research_env/
+
+# Temp files
+tier1_research.txt
+*.docx

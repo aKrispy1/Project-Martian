@@ -1,0 +1,6 @@
+# Project Martian - Research Environment Requirements
+# The core research script `agent_researcher.py` runs on pure Python 3 standard libraries.
+# No external pip installations are strictly required to scrape academic databases!
+
+# Optional helper packages (if you wish to extend the script):
+# requests>=2.31.0
