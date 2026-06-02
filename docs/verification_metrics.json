@@ -1,0 +1,74 @@
+{
+  "ctl_checker": {
+    "compiler": {
+      "states_explored": 10,
+      "property_pc_non_negative": {
+        "formula": "AG(pc >= 0)",
+        "verified": true
+      },
+      "property_wat_len_bounded": {
+        "formula": "AG(wat_len < 25)",
+        "verified": false,
+        "counterexample": [
+          {
+            "pc": 0,
+            "wat_len": 0
+          },
+          {
+            "pc": 1,
+            "wat_len": 14
+          },
+          {
+            "pc": 2,
+            "wat_len": 28
+          }
+        ]
+      }
+    },
+    "ca_grid": {
+      "states_explored": 11,
+      "property_cells_non_negative": {
+        "formula": "AG(all_cells >= 0)",
+        "verified": true
+      }
+    }
+  },
+  "translation_validator": {
+    "all_correct": true,
+    "proof_size": 4,
+    "verification_results": [
+      {
+        "variable": "c_0_0",
+        "source_expr": "(1 - (c_0_3 & c_3_0))",
+        "wat_expr": "(1 - (c_0_3 & c_3_0))",
+        "simplified_msm": "(1 - (c_0_3 & c_3_0))",
+        "simplified_wat": "(1 - (c_0_3 & c_3_0))",
+        "equivalent": true
+      },
+      {
+        "variable": "c_0_1",
+        "source_expr": "(1 - c_0_0)",
+        "wat_expr": "(1 - c_0_0)",
+        "simplified_msm": "(1 - c_0_0)",
+        "simplified_wat": "(1 - c_0_0)",
+        "equivalent": true
+      },
+      {
+        "variable": "c_0_2",
+        "source_expr": "(1 - c_0_1)",
+        "wat_expr": "(1 - c_0_1)",
+        "simplified_msm": "(1 - c_0_1)",
+        "simplified_wat": "(1 - c_0_1)",
+        "equivalent": true
+      },
+      {
+        "variable": "c_0_3",
+        "source_expr": "(1 - (c_0_2 | c_3_3))",
+        "wat_expr": "(1 - (c_0_2 | c_3_3))",
+        "simplified_msm": "(1 - (c_0_2 | c_3_3))",
+        "simplified_wat": "(1 - (c_0_2 | c_3_3))",
+        "equivalent": true
+      }
+    ]
+  }
+}

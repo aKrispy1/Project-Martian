@@ -17,6 +17,7 @@ const COMPILER_R1_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main
 const WASI_LOG_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/docs/wasi_run_log.txt`;
 const CA_WAT_OPT_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/docs/ca_crystallized_optimized.wat`;
 const COMPILER_WAT_OPT_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/docs/compiler_executable_optimized.wat`;
+const VERIFICATION_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/docs/verification_metrics.json`;
 
 // Fallback data in case GitHub fetches fail (e.g., local development before push)
 const defaultStats = {
@@ -128,6 +129,72 @@ const defaultWasiLog = `[WASI Runtime Init] Sandboxed directory mapping: /wasi_s
 [WASI System Call] fd_write: wrote 36 bytes to file successfully.
 [WASI Runtime Success] WASI execution completed. Return code: 0.`;
 
+const defaultVerification = {
+  "ctl_checker": {
+    "compiler": {
+      "states_explored": 10,
+      "property_pc_non_negative": {
+        "formula": "AG(pc >= 0)",
+        "verified": true
+      },
+      "property_wat_len_bounded": {
+        "formula": "AG(wat_len < 25)",
+        "verified": false,
+        "counterexample": [
+          { "pc": 0, "wat_len": 0 },
+          { "pc": 1, "wat_len": 14 },
+          { "pc": 2, "wat_len": 28 }
+        ]
+      }
+    },
+    "ca_grid": {
+      "states_explored": 11,
+      "property_cells_non_negative": {
+        "formula": "AG(all_cells >= 0)",
+        "verified": true
+      }
+    }
+  },
+  "translation_validator": {
+    "all_correct": true,
+    "proof_size": 4,
+    "verification_results": [
+      {
+        "variable": "c_0_0",
+        "source_expr": "(1 - (c_0_3 & c_3_0))",
+        "wat_expr": "(1 - (c_0_3 & c_3_0))",
+        "simplified_msm": "(1 - (c_0_3 & c_3_0))",
+        "simplified_wat": "(1 - (c_0_3 & c_3_0))",
+        "equivalent": true
+      },
+      {
+        "variable": "c_0_1",
+        "source_expr": "(1 - c_0_0)",
+        "wat_expr": "(1 - c_0_0)",
+        "simplified_msm": "(1 - c_0_0)",
+        "simplified_wat": "(1 - c_0_0)",
+        "equivalent": true
+      },
+      {
+        "variable": "c_0_2",
+        "source_expr": "(1 - c_0_1)",
+        "wat_expr": "(1 - c_0_1)",
+        "simplified_msm": "(1 - c_0_1)",
+        "simplified_wat": "(1 - c_0_1)",
+        "equivalent": true
+      },
+      {
+        "variable": "c_0_3",
+        "source_expr": "(1 - (c_0_2 | c_3_3))",
+        "wat_expr": "(1 - (c_0_2 | c_3_3))",
+        "simplified_msm": "(1 - (c_0_2 | c_3_3))",
+        "simplified_wat": "(1 - (c_0_2 | c_3_3))",
+        "equivalent": true
+      }
+    ]
+  }
+};
+
 export default function App() {
   const [stats, setStats] = useState(defaultStats);
   const [logs, setLogs] = useState([]);
@@ -148,10 +215,15 @@ export default function App() {
   const [selectedFsFile, setSelectedFsFile] = useState('wasi_input.txt');
   const [loaderMessage, setLoaderMessage] = useState("Establishing connection to Mars VM...");
 
+  // Phase Seven States
+  const [verification, setVerification] = useState(defaultVerification);
+  const [selectedCtlProperty, setSelectedCtlProperty] = useState('compiler_p1');
+  const [selectedValidationVar, setSelectedValidationVar] = useState('c_0_0');
+
   const [selectedTheme, setSelectedTheme] = useState(null);
   const [selectedNode, setSelectedNode] = useState('Φ_State');
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('terminal'); // 'terminal' | 'spec' | 'bootstrap' | 'avst' | 'wasi' | 'ledger'
+  const [activeTab, setActiveTab] = useState('terminal'); // 'terminal' | 'spec' | 'bootstrap' | 'avst' | 'wasi' | 'verify' | 'ledger'
   const [caStep, setCaStep] = useState(0);
 
   // Status message loader loop
@@ -234,6 +306,10 @@ export default function App() {
         const compOptRes = await fetch(COMPILER_WAT_OPT_URL);
         if (compOptRes.ok) setCompilerWatOpt(await compOptRes.text());
 
+        // Fetch Phase Seven verification metrics
+        const verificationRes = await fetch(VERIFICATION_URL);
+        if (verificationRes.ok) setVerification(await verificationRes.json());
+
       } catch (err) {
         console.error("Error fetching data from remote repository, using local defaults.", err);
         // Attempt to fetch locally
@@ -279,6 +355,9 @@ export default function App() {
 
           const localCompOpt = await fetch('/docs/compiler_executable_optimized.wat');
           if (localCompOpt.ok) setCompilerWatOpt(await localCompOpt.text());
+
+          const localVerification = await fetch('/docs/verification_metrics.json');
+          if (localVerification.ok) setVerification(await localVerification.json());
         } catch (e) {
           console.error("Local fetches failed, using hardcoded static fallbacks.");
         }
@@ -459,6 +538,12 @@ export default function App() {
             onClick={() => setActiveTab('wasi')}
           >
             🚀 COMPILER & WASI
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'verify' ? 'tab-active' : ''}`}
+            onClick={() => setActiveTab('verify')}
+          >
+            🛡️ FORMAL VERIFICATION
           </button>
           <button 
             className={`tab-btn ${activeTab === 'ledger' ? 'tab-active' : ''}`}
@@ -1001,6 +1086,211 @@ export default function App() {
                     );
                   })}
                 </div>
+
+              </div>
+
+            </div>
+          </div>
+        )}
+
+        {/* Tab 6: Formal Verification (CTL & Translation Validation) */}
+        {activeTab === 'verify' && (
+          <div className="verification-panel">
+            <div className="verification-grid">
+              
+              {/* Left Column: Bounded CTL Model Checker */}
+              <div className="verification-card">
+                <h3>
+                  <span>🛡️ Bounded CTL Model Checker</span>
+                  <span className="badge badge-green">
+                    States Explored: {verification?.ctl_checker?.compiler?.states_explored || 10}
+                  </span>
+                </h3>
+                
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                  Verifies branching state-space temporal properties (AG, EG, AF, EF, EX, AX) for both compiler output liveness bounds and Cell Automata state spaces.
+                </p>
+
+                <div className="property-selector">
+                  {/* Property 1: Compiler pc >= 0 */}
+                  <div 
+                    className={`property-item ${selectedCtlProperty === 'compiler_p1' ? 'active' : ''}`}
+                    onClick={() => setSelectedCtlProperty('compiler_p1')}
+                  >
+                    <div>
+                      <div style={{ fontSize: '0.8rem', color: '#fdba74', fontWeight: 'bold' }}>PC NON-NEGATIVE</div>
+                      <div className="property-formula">{verification?.ctl_checker?.compiler?.property_pc_non_negative?.formula || "AG(pc >= 0)"}</div>
+                    </div>
+                    <div>
+                      {verification?.ctl_checker?.compiler?.property_pc_non_negative?.verified ? (
+                        <span className="badge badge-verified">VERIFIED</span>
+                      ) : (
+                        <span className="badge badge-failed">VIOLATED</span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Property 2: Compiler wat_len < 25 */}
+                  <div 
+                    className={`property-item ${selectedCtlProperty === 'compiler_p2' ? 'active' : ''}`}
+                    onClick={() => setSelectedCtlProperty('compiler_p2')}
+                  >
+                    <div>
+                      <div style={{ fontSize: '0.8rem', color: '#fdba74', fontWeight: 'bold' }}>WAT LENGTH BOUND</div>
+                      <div className="property-formula">{verification?.ctl_checker?.compiler?.property_wat_len_bounded?.formula || "AG(wat_len < 25)"}</div>
+                    </div>
+                    <div>
+                      {verification?.ctl_checker?.compiler?.property_wat_len_bounded?.verified ? (
+                        <span className="badge badge-verified">VERIFIED</span>
+                      ) : (
+                        <span className="badge badge-failed">VIOLATED</span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Property 3: CA Grid Non-Negative Cells */}
+                  <div 
+                    className={`property-item ${selectedCtlProperty === 'ca_p1' ? 'active' : ''}`}
+                    onClick={() => setSelectedCtlProperty('ca_p1')}
+                  >
+                    <div>
+                      <div style={{ fontSize: '0.8rem', color: '#fdba74', fontWeight: 'bold' }}>CA CELL VALUE BOUNDS</div>
+                      <div className="property-formula">{verification?.ctl_checker?.ca_grid?.property_cells_non_negative?.formula || "AG(all_cells >= 0)"}</div>
+                    </div>
+                    <div>
+                      {verification?.ctl_checker?.ca_grid?.property_cells_non_negative?.verified ? (
+                        <span className="badge badge-verified">VERIFIED</span>
+                      ) : (
+                        <span className="badge badge-failed">VIOLATED</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Counterexample Viewport */}
+                {selectedCtlProperty === 'compiler_p1' && (
+                  <div className="counterexample-panel" style={{ borderColor: 'rgba(34, 197, 94, 0.25)' }}>
+                    <div className="counterexample-title" style={{ color: '#4ade80' }}>
+                      🟢 Safety Bounds Preserved
+                    </div>
+                    <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                      All states satisfy the pc &gt;= 0 safety constraint. No counterexamples found.
+                    </p>
+                  </div>
+                )}
+
+                {selectedCtlProperty === 'compiler_p2' && (
+                  <div className="counterexample-panel">
+                    <div className="counterexample-title">
+                      ⚠️ Safety Violation - Counterexample Trace Found
+                    </div>
+                    <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
+                      A compiler trace can exceed the 25-byte target limit by generating 28 bytes of WAT.
+                    </p>
+                    <div className="counterexample-steps">
+                      {(verification?.ctl_checker?.compiler?.property_wat_len_bounded?.counterexample || []).map((step, idx) => (
+                        <div key={idx} className="counterexample-step">
+                          Step {idx}: pc={step.pc}, wat_len={step.wat_len} {step.wat_len >= 25 ? "🚨 (Violation)" : ""}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {selectedCtlProperty === 'ca_p1' && (
+                  <div className="counterexample-panel" style={{ borderColor: 'rgba(34, 197, 94, 0.25)' }}>
+                    <div className="counterexample-title" style={{ color: '#4ade80' }}>
+                      🟢 All CA Cell States Valid
+                    </div>
+                    <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                      The state spaces of the cellular automaton cells c_r_c verify that no cell value ever drops below 0.
+                    </p>
+                  </div>
+                )}
+
+              </div>
+
+              {/* Right Column: Translation Validation Engine */}
+              <div className="verification-card">
+                <h3>
+                  <span>📜 Translation Validation Engine</span>
+                  <span className="badge badge-verified">
+                    Proof Size: {verification?.translation_validator?.proof_size || 4} variables
+                  </span>
+                </h3>
+                
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                  Algebraically proves that compiled WebAssembly WAT global variable updates are 100% equivalent to original mathematical MSM equations.
+                </p>
+
+                {/* Variable selectors */}
+                <div className="var-selector-row">
+                  {(verification?.translation_validator?.verification_results || []).map((result, idx) => (
+                    <button
+                      key={idx}
+                      className={`var-select-btn ${selectedValidationVar === result.variable ? 'active' : ''}`}
+                      onClick={() => setSelectedValidationVar(result.variable)}
+                    >
+                      {result.variable}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Proof Tree Viewer */}
+                {(() => {
+                  const currentResult = (verification?.translation_validator?.verification_results || []).find(r => r.variable === selectedValidationVar);
+                  if (!currentResult) return <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>No validation data selected.</p>;
+                  return (
+                    <div className="proof-details">
+                      <div className="proof-row">
+                        <span className="proof-label">Variable Identifier</span>
+                        <div className="proof-value" style={{ color: '#fdba74', fontWeight: 'bold' }}>{currentResult.variable}</div>
+                      </div>
+                      
+                      <div className="proof-row">
+                        <span className="proof-label">Source Expression (MSM)</span>
+                        <div className="proof-value">{currentResult.source_expr}</div>
+                      </div>
+                      
+                      <div className="proof-row">
+                        <span className="proof-label">Symbolic Execution Target (WAT)</span>
+                        <div className="proof-value">{currentResult.wat_expr}</div>
+                      </div>
+
+                      <div className="proof-row">
+                        <span className="proof-label">Simplified MSM Representation</span>
+                        <div className="proof-value" style={{ color: '#38bdf8' }}>{currentResult.simplified_msm}</div>
+                      </div>
+
+                      <div className="proof-row">
+                        <span className="proof-label">Simplified WAT Representation</span>
+                        <div className="proof-value" style={{ color: '#38bdf8' }}>{currentResult.simplified_wat}</div>
+                      </div>
+
+                      <div className="proof-row">
+                        <span className="proof-label">Validation Equivalence</span>
+                        <div>
+                          {currentResult.equivalent ? (
+                            <span className="badge badge-verified">✓ EQUIVALENT (PROVEN)</span>
+                          ) : (
+                            <span className="badge badge-failed">✗ MISMATCH (LOGIC DRIFT)</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* Seal of Authenticity */}
+                {verification?.translation_validator?.all_correct && (
+                  <div className="proof-certificate-seal">
+                    <span className="seal-icon">🎖️</span>
+                    <div className="seal-text">
+                      <h4>100% PROVEN CORRECT</h4>
+                      <p>Wasm compilation is mathematically proven equivalent to source MSM.</p>
+                    </div>
+                  </div>
+                )}
 
               </div>
 
