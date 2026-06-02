@@ -1,0 +1,1020 @@
+{
+  "ca_crystallized.wat": {
+    "initial_instructions": 74,
+    "final_instructions": 74,
+    "reduction_percentage": 0.0,
+    "optimal_sequence": [],
+    "episodes": [
+      {
+        "episode": 1,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 2,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 3,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 4,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 5,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 6,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 7,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 8,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 9,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 10,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 11,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 12,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 13,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 14,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 15,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 16,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 17,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 18,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 19,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 20,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 21,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 22,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 23,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 24,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 25,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 26,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 27,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 28,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 29,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 30,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 31,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 32,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 33,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 34,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 35,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 36,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 37,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 38,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 39,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 40,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 41,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 42,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 43,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 44,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 45,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 46,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 47,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 48,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 49,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 50,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 51,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 52,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 53,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 54,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 55,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 56,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 57,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 58,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 59,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 60,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 61,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 62,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 63,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 64,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 65,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 66,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 67,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 68,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 69,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 70,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 71,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 72,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 73,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 74,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 75,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 76,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 77,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 78,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 79,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 80,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 81,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 82,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 83,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 84,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 85,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 86,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 87,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 88,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 89,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 90,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 91,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 92,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 93,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 94,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 95,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 96,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 97,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 98,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 99,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      },
+      {
+        "episode": 100,
+        "reward": -0.10000000000000009,
+        "instructions": 72
+      }
+    ]
+  },
+  "compiler_executable.wat": {
+    "initial_instructions": 531,
+    "final_instructions": 338,
+    "reduction_percentage": 36.346516007532955,
+    "optimal_sequence": [
+      "CSE"
+    ],
+    "episodes": [
+      {
+        "episode": 1,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 2,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 3,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 4,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 5,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 6,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 7,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 8,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 9,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 10,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 11,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 12,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 13,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 14,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 15,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 16,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 17,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 18,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 19,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 20,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 21,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 22,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 23,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 24,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 25,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 26,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 27,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 28,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 29,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 30,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 31,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 32,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 33,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 34,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 35,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 36,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 37,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 38,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 39,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 40,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 41,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 42,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 43,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 44,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 45,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 46,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 47,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 48,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 49,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 50,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 51,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 52,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 53,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 54,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 55,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 56,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 57,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 58,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 59,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 60,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 61,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 62,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 63,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 64,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 65,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 66,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 67,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 68,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 69,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 70,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 71,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 72,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 73,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 74,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 75,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 76,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 77,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 78,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 79,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 80,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 81,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 82,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 83,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 84,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 85,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 86,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 87,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 88,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 89,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 90,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 91,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 92,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 93,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 94,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 95,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 96,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 97,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 98,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 99,
+        "reward": 190.9,
+        "instructions": 338
+      },
+      {
+        "episode": 100,
+        "reward": 190.9,
+        "instructions": 338
+      }
+    ]
+  }
+}

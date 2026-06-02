@@ -1,0 +1,21 @@
+[WASI Runtime Init] Sandboxed directory mapping: /wasi_shared -> ./wasi_shared
+[WASI System Call] fd_open(wasi_shared/wasi_input.txt, read)
+[WASI System Call] fd_read: read 3 bytes -> 'x+y'
+[WASI Runtime Init] Loading executable Wasm container: docs/compiler_executable_optimized.wat
+[WASI Runtime Success] WAT bytecode parsed and verification constraints passed.
+[WASI Memory Mapping] Initialized 'src' vector at Wasm memory [0 .. 1024] with 'x+y'
+[WASI Runtime Action] Globals initialized: pc = 0, wat_len = 0
+[WASI Sandbox Execution] Running compiler transition loops...
+  * Cycle 01: Wasm Execution state -> pc=1, wat_len=14
+  * Cycle 02: Wasm Execution state -> pc=2, wat_len=22
+  * Cycle 03: Wasm Execution state -> pc=3, wat_len=36
+[WASI Sandbox Execution] Execution halt reached in 3 cycles.
+[WASI Sandbox Output] Extracted compiled WAT (size: 36 bytes):
+------------------------------------------
+  global.get $x
+  i32.add
+  global.get $y
+------------------------------------------
+[WASI System Call] fd_open(wasi_shared/wasi_output.wat, write)
+[WASI System Call] fd_write: wrote 36 bytes to file successfully.
+[WASI Runtime Success] WASI execution completed. Return code: 0.

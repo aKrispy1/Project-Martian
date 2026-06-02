@@ -810,3 +810,353 @@ body {
     height: 350px;
   }
 }
+
+/* =======================================================
+   LAZY LOADER SPINNER (SPINNING MARS)
+   ======================================================= */
+.lazy-loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, #110603 0%, #050201 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  transition: opacity 0.8s ease-out;
+}
+
+.loader-container {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+/* Orbital ring around Mars */
+.loader-orbit {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border: 1px dashed rgba(249, 115, 22, 0.3);
+  border-radius: 50%;
+  animation: spin 20s linear infinite;
+}
+
+.loader-satellite {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: var(--neon-orange);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--neon-orange);
+  transform: translate(-50%, -50%);
+}
+
+/* Mars sphere with 3D gradient mapping */
+.planet-mars {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ff7849 0%, #c23b13 45%, #6a1300 80%, #1a0000 100%);
+  box-shadow: 
+    0 0 50px rgba(249, 115, 22, 0.35), 
+    inset -15px -15px 40px rgba(0, 0, 0, 0.85),
+    inset 10px 10px 20px rgba(255, 255, 255, 0.15);
+  animation: pulse-glow 4s ease-in-out infinite alternate;
+}
+
+/* Simulated rotation effect via overlay */
+.planet-mars::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(249, 115, 22, 0.05),
+    rgba(249, 115, 22, 0.05) 5px,
+    transparent 5px,
+    transparent 10px
+  );
+  opacity: 0.7;
+  animation: spin 30s linear infinite;
+}
+
+.loader-status-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.loader-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: var(--text-primary);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.loader-status {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #fdba74;
+  height: 1.5rem;
+  opacity: 0.85;
+}
+
+.loader-bar-bg {
+  width: 180px;
+  height: 4px;
+  background: rgba(249, 115, 22, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.loader-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--neon-orange), var(--neon-amber));
+  border-radius: 2px;
+  animation: fill-up 3s ease-in-out forwards;
+}
+
+/* Animations */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 35px rgba(249, 115, 22, 0.25), inset -15px -15px 40px rgba(0, 0, 0, 0.85); }
+  100% { box-shadow: 0 0 55px rgba(249, 115, 22, 0.45), inset -15px -15px 40px rgba(0, 0, 0, 0.8); }
+}
+
+@keyframes fill-up {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+/* =======================================================
+   NEURAL COMPILER & WASI TAB STYLING
+   ======================================================= */
+.wasi-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  z-index: 12;
+}
+
+@media(max-width: 1024px) {
+  .wasi-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.metrics-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.optimization-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pass-badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.pass-badge {
+  background: rgba(249, 115, 22, 0.1);
+  border: 1px solid var(--border-color);
+  color: #fdba74;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.pass-arrow {
+  color: var(--neon-orange);
+  font-weight: bold;
+}
+
+.chart-container-r1 {
+  height: 200px;
+  background: rgba(10, 5, 2, 0.4);
+  border: 1px solid rgba(249, 115, 22, 0.1);
+  border-radius: 6px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  padding: 1.5rem 0.5rem 0.5rem 0.5rem;
+}
+
+.chart-bar-r1 {
+  width: 6px;
+  background: linear-gradient(180deg, var(--neon-orange), rgba(249, 115, 22, 0.1));
+  border-radius: 3px 3px 0 0;
+  position: relative;
+  transition: height 0.5s ease-out;
+}
+
+.chart-bar-r1:hover {
+  background: var(--neon-amber);
+  box-shadow: 0 0 10px var(--neon-amber);
+}
+
+.chart-tooltip-r1 {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #110603;
+  border: 1px solid var(--border-color);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  pointer-events: none;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 100;
+}
+
+.chart-bar-r1:hover .chart-tooltip-r1 {
+  opacity: 1;
+}
+
+/* WASI Filesystem sandboxing styles */
+.wasi-fs-container {
+  display: flex;
+  gap: 1rem;
+  height: 320px;
+  background: rgba(8, 3, 2, 0.7);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.wasi-fs-tree {
+  width: 200px;
+  border-right: 1px solid var(--border-color);
+  padding: 1rem;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  background: rgba(10, 5, 2, 0.3);
+}
+
+.fs-node {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.4rem;
+  cursor: pointer;
+  border-radius: 4px;
+  color: var(--text-muted);
+}
+
+.fs-node:hover {
+  background: rgba(249, 115, 22, 0.05);
+  color: var(--text-primary);
+}
+
+.fs-node.active {
+  background: rgba(249, 115, 22, 0.1);
+  color: var(--neon-orange);
+  font-weight: bold;
+}
+
+.fs-icon {
+  font-size: 0.9rem;
+}
+
+.wasi-fs-content {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.fs-content-title {
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  color: #fdba74;
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.fs-content-body {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+  color: var(--text-primary);
+}
+
+/* WASI Terminal execution log viewport */
+.wasi-terminal-logs {
+  height: 300px;
+  background: #040201;
+  border: 1px solid rgba(249, 115, 22, 0.25);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+}
+
+.wasi-log-line {
+  margin-bottom: 0.25rem;
+}
+
+.wasi-log-init { color: #f97316; }
+.wasi-log-call { color: #f59e0b; }
+.wasi-log-action { color: #9ca3af; }
+.wasi-log-success { color: #22c55e; font-weight: bold; }
+.wasi-log-error { color: #ef4444; }
+.wasi-log-mem { color: #a855f7; }
+
+/* Compare container */
+.wat-compare-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media(max-width: 768px) {
+  .wat-compare-container {
+    grid-template-columns: 1fr;
+  }
+}
+
