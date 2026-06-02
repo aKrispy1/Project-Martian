@@ -11,6 +11,8 @@ const LANDAUER_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/do
 const SELF_HOSTING_STATS_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/docs/self_hosting_stats.json`;
 const COMPILER_MSM_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/compiler.msm`;
 const COMPILER_WAT_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/docs/compiler_executable.wat`;
+const AVST_METRICS_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/docs/avst_metrics.json`;
+const CA_WAT_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/docs/ca_crystallized.wat`;
 
 // Fallback data in case GitHub fetches fail (e.g., local development before push)
 const defaultStats = {
@@ -42,6 +44,47 @@ const defaultSelfHosting = {
   last_bootstrap_time: "2026-06-02 00:30:00"
 };
 
+const defaultAvstMetrics = {
+  vsa: {
+    dimension: 10000,
+    similarities: [1.0000, 0.7000],
+    noise_robustness_verified: true
+  },
+  ca: {
+    grid_size: [4, 4],
+    timesteps: 10,
+    patterns: [
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1],
+      [1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1],
+      [1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1],
+      [1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1],
+      [1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1],
+      [1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1],
+      [1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1],
+      [1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1],
+      [1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1]
+    ],
+    crystallized_gates: [2, 3, 2, 5, 3, 1, 0, 1, 5, 2, 4, 1, 2, 0, 0, 5],
+    gate_search_errors: [8, 6, 4, 2],
+    msm_exported: "Γ ⊢ c_0_0 : ℤ ...\nΦ_state: ⟨c_0_0...⟩"
+  },
+  marl: {
+    success_rate: 0.4,
+    episodes: [
+      {
+        target: [4, 7],
+        decoded_coords: [4, 7],
+        steps: 8,
+        success: true,
+        trajectory: [[0, 0], [1, 1], [2, 2], [3, 3], [4, 4], [4, 5], [4, 6], [4, 7]],
+        similarity: 0.7000
+      }
+    ]
+  }
+};
+
 export default function App() {
   const [stats, setStats] = useState(defaultStats);
   const [logs, setLogs] = useState([]);
@@ -49,12 +92,15 @@ export default function App() {
   const [watCode, setWatCode] = useState('');
   const [landauer, setLandauer] = useState(defaultLandauer);
   const [selfHosting, setSelfHosting] = useState(defaultSelfHosting);
+  const [avstMetrics, setAvstMetrics] = useState(defaultAvstMetrics);
+  const [caWat, setCaWat] = useState('');
   const [compilerMsm, setCompilerMsm] = useState('');
   const [compilerWat, setCompilerWat] = useState('');
   const [selectedTheme, setSelectedTheme] = useState(null);
   const [selectedNode, setSelectedNode] = useState('Φ_State');
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('terminal'); // 'terminal' | 'spec' | 'bootstrap' | 'ledger'
+  const [activeTab, setActiveTab] = useState('terminal'); // 'terminal' | 'spec' | 'bootstrap' | 'avst' | 'ledger'
+  const [caStep, setCaStep] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -109,6 +155,18 @@ export default function App() {
         if (compilerWatRes.ok) {
           setCompilerWat(await compilerWatRes.text());
         }
+
+        // Fetch AVST Metrics
+        const avstRes = await fetch(AVST_METRICS_URL);
+        if (avstRes.ok) {
+          setAvstMetrics(await avstRes.json());
+        }
+
+        // Fetch CA WAT
+        const caWatRes = await fetch(CA_WAT_URL);
+        if (caWatRes.ok) {
+          setCaWat(await caWatRes.text());
+        }
       } catch (err) {
         console.error("Error fetching data from remote repository, using local defaults.", err);
         // Attempt to fetch locally
@@ -136,6 +194,12 @@ export default function App() {
 
           const localCompilerWat = await fetch('/docs/compiler_executable.wat');
           if (localCompilerWat.ok) setCompilerWat(await localCompilerWat.text());
+
+          const localAvst = await fetch('/docs/avst_metrics.json');
+          if (localAvst.ok) setAvstMetrics(await localAvst.json());
+
+          const localCaWat = await fetch('/docs/ca_crystallized.wat');
+          if (localCaWat.ok) setCaWat(await localCaWat.text());
         } catch (e) {
           console.error("Local fetches failed, using hardcoded static fallbacks.");
         }
@@ -212,6 +276,9 @@ export default function App() {
     return `M ${points.join(' L ')}`;
   }
 
+  // Gate type label decoder
+  const gateLabels = ["AND", "OR", "XOR", "NOT", "NAND", "NOR"];
+
   return (
     <div className="martian-app">
       {/* Outer Scanline Grid overlay */}
@@ -277,6 +344,12 @@ export default function App() {
             onClick={() => setActiveTab('bootstrap')}
           >
             🌀 SELF-HOSTING LOOP
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'avst' ? 'tab-active' : ''}`}
+            onClick={() => setActiveTab('avst')}
+          >
+            🧠 NEURAL AVST ENGINE
           </button>
           <button 
             className={`tab-btn ${activeTab === 'ledger' ? 'tab-active' : ''}`}
@@ -528,7 +601,136 @@ export default function App() {
           </div>
         )}
 
-        {/* Tab 4: Crawled Ledger */}
+        {/* Tab 4: Neural AVST Engine Simulation Dashboard */}
+        {activeTab === 'avst' && (
+          <div className="spec-panel">
+            <div className="spec-header">
+              <h3>Autopoietic Vector-Symbolic Topology (AVST) Baseline Harness</h3>
+              <span style={{ color: 'var(--neon-orange)' }}>VSA Robustness: {avstMetrics.vsa.noise_robustness_verified ? '🟢 verified' : '🔴 failed'}</span>
+            </div>
+            <div className="spec-content">
+              <div className="spec-split-container">
+                {/* Left Side: DiffLogic CA Checkerboard pattern animator */}
+                <div className="spec-left">
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    <div className="spec-block-title">DiffLogic CA Checkerboard Pattern (Step: {caStep}/10)</div>
+                    <input 
+                      type="range" 
+                      min="0" 
+                      max="10" 
+                      value={caStep} 
+                      onChange={(e) => setCaStep(parseInt(e.target.value))}
+                      style={{ accentColor: 'var(--neon-orange)', cursor: 'pointer' }}
+                    />
+                  </div>
+                  
+                  {/* Render 4x4 logic grid */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 50px)', gap: '8px', justifyContent: 'center', margin: '2rem 0' }}>
+                    {avstMetrics.ca.patterns[caStep] && avstMetrics.ca.patterns[caStep].map((val, idx) => (
+                      <div 
+                        key={idx} 
+                        style={{
+                          width: '50px',
+                          height: '50px',
+                          borderRadius: '4px',
+                          background: val === 1 ? 'radial-gradient(circle, #ea580c 0%, #000 100%)' : '#030100',
+                          border: val === 1 ? '2px solid var(--neon-orange)' : '1px solid var(--border-color)',
+                          boxShadow: val === 1 ? '0 0 15px var(--neon-orange-glow)' : 'none',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          fontSize: '0.65rem',
+                          color: '#fff',
+                          fontFamily: 'var(--font-mono)',
+                          transition: 'all 0.15s ease-out'
+                        }}
+                      >
+                        {gateLabels[avstMetrics.ca.crystallized_gates[idx]] || 'X'}
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="spec-block-title">Exported MSM Compiler Interface</div>
+                  <pre className="spec-raw" style={{ fontSize: '0.7rem', maxHeight: '130px', overflowY: 'auto', background: '#020000', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '0.5rem', color: '#fda4af' }}>
+                    <code>{avstMetrics.ca.msm_exported}</code>
+                  </pre>
+                </div>
+
+                {/* Right Side: Rover grid coordinate trajectory, similarity graphs, and crystallized WAT */}
+                <div className="spec-right">
+                  {/* Trajectory visualizer */}
+                  <div>
+                    <div className="spec-block-title">MARL Rover rendezvous grid trajectory</div>
+                    <div style={{ background: '#020000', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '0.5rem', display: 'flex', gap: '0.75rem', fontSize: '0.7rem' }}>
+                      <div style={{ flex: '1', display: 'grid', gridTemplateColumns: 'repeat(10, 1fr)', gap: '2px', aspectRatio: '1' }}>
+                        {Array.from({ length: 100 }).map((_, idx) => {
+                          const x = idx % 10;
+                          const y = Math.floor(idx / 10);
+                          const isTarget = avstMetrics.marl.episodes[0].target[0] === x && avstMetrics.marl.episodes[0].target[1] === y;
+                          const isPath = avstMetrics.marl.episodes[0].trajectory.some(p => p[0] === x && p[1] === y);
+                          const isStart = avstMetrics.marl.episodes[0].trajectory[0][0] === x && avstMetrics.marl.episodes[0].trajectory[0][1] === y;
+                          
+                          let bg = '#020000';
+                          let border = '1px solid rgba(249, 115, 22, 0.05)';
+                          if (isStart) bg = 'var(--neon-blue, #3b82f6)';
+                          else if (isTarget) bg = '#10b981';
+                          else if (isPath) bg = 'rgba(234, 88, 12, 0.4)';
+                          
+                          return (
+                            <div 
+                              key={idx} 
+                              style={{ 
+                                background: bg, 
+                                border: border,
+                                borderRadius: '1px'
+                              }} 
+                            />
+                          );
+                        })}
+                      </div>
+                      
+                      <div style={{ width: '120px', display: 'flex', flexDirection: 'column', gap: '0.4rem', justifyContent: 'center' }}>
+                        <div>🟢 Target: ({avstMetrics.marl.episodes[0].target[0]}, {avstMetrics.marl.episodes[0].target[1]})</div>
+                        <div>🔵 Start: ({avstMetrics.marl.episodes[0].trajectory[0][0]}, {avstMetrics.marl.episodes[0].trajectory[0][1]})</div>
+                        <div>🟠 Steps: {avstMetrics.marl.episodes[0].steps}</div>
+                        <div>📈 Sim: {avstMetrics.marl.episodes[0].similarity.toFixed(4)}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* VSA performance details */}
+                  <div>
+                    <div className="spec-block-title">VSA Bipolar Encoding Similarities</div>
+                    <div style={{ background: '#020000', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '0.5rem', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>Clean Code Decoded Similarity:</span>
+                        <span style={{ color: '#10b981' }}>{avstMetrics.vsa.similarities[0].toFixed(4)}</span>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>15% Noise Decoded Similarity:</span>
+                        <span style={{ color: 'var(--neon-gold)' }}>{avstMetrics.vsa.similarities[1].toFixed(4)}</span>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>Target Dimension:</span>
+                        <span>{avstMetrics.vsa.dimension} bits</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* VM compiler bridge WAT preview */}
+                  <div>
+                    <div className="spec-block-title">VM Compiled CA WebAssembly (ca_crystallized.wat)</div>
+                    <pre style={{ maxHeight: '110px', overflowY: 'auto', background: '#020000', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '0.5rem', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--neon-orange)' }}>
+                      <code>{caWat || `(module\n  (global $c_0_0 (mut i32) (i32.const 0))\n  (func $transition\n    global.get $c_0_0\n    i32.eqz\n    global.set $c_0_0\n  )\n)`}</code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Tab 5: Crawled Ledger */}
         {activeTab === 'ledger' && (
           <div className="ledger-panel">
             <div className="ledger-header">
