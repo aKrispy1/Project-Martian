@@ -8,7 +8,7 @@
   (global $c_1_2 (mut i32) (i32.const 1))
   (global $c_1_3 (mut i32) (i32.const 0))
   (global $c_2_0 (mut i32) (i32.const 1))
-  (global $c_2_1 (mut i32) (i32.const 0))
+  (global $c_2_1 (mut i32) (i32.const 1))
   (global $c_2_2 (mut i32) (i32.const 1))
   (global $c_2_3 (mut i32) (i32.const 0))
   (global $c_3_0 (mut i32) (i32.const 1))

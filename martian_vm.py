@@ -137,7 +137,7 @@ class MartianVM:
                     raise ValueError(f"Security Sandbox Breach detected in expression: {out_expr}")
                 
                 # Clean mathematical notation to python-executable equivalents
-                eval_expr = out_expr.replace('^', '**').replace('⊕', '^') # map standard math mapping
+                eval_expr = out_expr.replace('⊕', '^') # map XOR symbol if present
                 
                 try:
                     # Evaluate expression safely in local context
