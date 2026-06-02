@@ -1,0 +1,3 @@
+Γ ⊢ src : Vector[ℤ, 8], dest : Vector[ℤ, 8], read_pc : ℤ, write_pc : ℤ
+Φ_state: ⟨dest[write_pc], read_pc, write_pc⟩ ➔ ⟨src[read_pc] if read_pc >= 0 else dest[write_pc], read_pc - 1 if read_pc >= 0 else read_pc, write_pc + 1 if read_pc >= 0 else write_pc⟩
+CTL: AG(write_pc >= 0 ∧ write_pc <= 8)
