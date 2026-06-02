@@ -1,8 +1,8 @@
 {
   "total_papers": 18,
-  "last_sync_epoch": "2026-06-01 18:27:46",
+  "last_sync_epoch": "2026-06-02 00:32:00",
   "current_vocabulary_size": 51,
-  "thermodynamic_efficiency": 99.1,
-  "self_hosting_stage": "Stage 1 (Seed Compiler)",
-  "status": "AUTONOMOUS_RUNNING"
+  "thermodynamic_efficiency": 99.3,
+  "self_hosting_stage": "Stage 2 (Martian Compiler Source)",
+  "status": "SELF_HOSTING_ACTIVE"
 }

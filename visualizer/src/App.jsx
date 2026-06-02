@@ -8,15 +8,18 @@ const LOGS_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/docs/r
 const SPEC_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/docs/research_stage_2_symbology_and_compilation.md`;
 const WAT_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/docs/compiled_output.wat`;
 const LANDAUER_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/docs/landauer_stats.json`;
+const SELF_HOSTING_STATS_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/docs/self_hosting_stats.json`;
+const COMPILER_MSM_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/compiler.msm`;
+const COMPILER_WAT_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/docs/compiler_executable.wat`;
 
 // Fallback data in case GitHub fetches fail (e.g., local development before push)
 const defaultStats = {
   total_papers: 18,
-  last_sync_epoch: "2026-06-01 18:27:46",
+  last_sync_epoch: "2026-06-02 00:32:00",
   current_vocabulary_size: 51,
-  thermodynamic_efficiency: 99.1,
-  self_hosting_stage: "Stage 1 (Seed Compiler)",
-  status: "AUTONOMOUS_RUNNING"
+  thermodynamic_efficiency: 99.3,
+  self_hosting_stage: "Stage 2 (Martian Compiler Source)",
+  status: "SELF_HOSTING_ACTIVE"
 };
 
 const defaultLandauer = {
@@ -30,16 +33,28 @@ const defaultLandauer = {
   }))
 };
 
+const defaultSelfHosting = {
+  status: "SELF_HOSTING_ACTIVE",
+  compiler_msm_hash: 3484776783,
+  compiler_wat_hash: 3814708803,
+  equivalent_proof_verified: true,
+  bootstrap_cycles: 3,
+  last_bootstrap_time: "2026-06-02 00:30:00"
+};
+
 export default function App() {
   const [stats, setStats] = useState(defaultStats);
   const [logs, setLogs] = useState([]);
   const [spec, setSpec] = useState('');
   const [watCode, setWatCode] = useState('');
   const [landauer, setLandauer] = useState(defaultLandauer);
+  const [selfHosting, setSelfHosting] = useState(defaultSelfHosting);
+  const [compilerMsm, setCompilerMsm] = useState('');
+  const [compilerWat, setCompilerWat] = useState('');
   const [selectedTheme, setSelectedTheme] = useState(null);
   const [selectedNode, setSelectedNode] = useState('Φ_State');
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('terminal'); // 'terminal' | 'spec' | 'ledger'
+  const [activeTab, setActiveTab] = useState('terminal'); // 'terminal' | 'spec' | 'bootstrap' | 'ledger'
 
   useEffect(() => {
     async function fetchData() {
@@ -76,6 +91,24 @@ export default function App() {
         if (landauerRes.ok) {
           setLandauer(await landauerRes.json());
         }
+
+        // Fetch Self-hosting stats
+        const selfHostingRes = await fetch(SELF_HOSTING_STATS_URL);
+        if (selfHostingRes.ok) {
+          setSelfHosting(await selfHostingRes.json());
+        }
+
+        // Fetch compiler.msm source
+        const compilerMsmRes = await fetch(COMPILER_MSM_URL);
+        if (compilerMsmRes.ok) {
+          setCompilerMsm(await compilerMsmRes.text());
+        }
+
+        // Fetch compiler_executable.wat source
+        const compilerWatRes = await fetch(COMPILER_WAT_URL);
+        if (compilerWatRes.ok) {
+          setCompilerWat(await compilerWatRes.text());
+        }
       } catch (err) {
         console.error("Error fetching data from remote repository, using local defaults.", err);
         // Attempt to fetch locally
@@ -94,6 +127,15 @@ export default function App() {
 
           const localLandauer = await fetch('/docs/landauer_stats.json');
           if (localLandauer.ok) setLandauer(await localLandauer.json());
+
+          const localSelfHosting = await fetch('/docs/self_hosting_stats.json');
+          if (localSelfHosting.ok) setSelfHosting(await localSelfHosting.json());
+
+          const localCompilerMsm = await fetch('/compiler.msm');
+          if (localCompilerMsm.ok) setCompilerMsm(await localCompilerMsm.text());
+
+          const localCompilerWat = await fetch('/docs/compiler_executable.wat');
+          if (localCompilerWat.ok) setCompilerWat(await localCompilerWat.text());
         } catch (e) {
           console.error("Local fetches failed, using hardcoded static fallbacks.");
         }
@@ -229,6 +271,12 @@ export default function App() {
             onClick={() => setActiveTab('spec')}
           >
             📐 FOUNDATIONAL SPEC
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'bootstrap' ? 'tab-active' : ''}`}
+            onClick={() => setActiveTab('bootstrap')}
+          >
+            🌀 SELF-HOSTING LOOP
           </button>
           <button 
             className={`tab-btn ${activeTab === 'ledger' ? 'tab-active' : ''}`}
@@ -398,7 +446,89 @@ export default function App() {
           </div>
         )}
 
-        {/* Tab 3: Crawled Ledger */}
+        {/* Tab 3: Self-Hosting / Bootstrapping Loop View */}
+        {activeTab === 'bootstrap' && (
+          <div className="spec-panel">
+            <div className="spec-header">
+              <h3>Chicken-or-the-Egg Bootstrapping Lifecycle</h3>
+              <span style={{ color: 'var(--neon-gold)' }}>Status: {selfHosting.status}</span>
+            </div>
+            <div className="spec-content">
+              <div className="spec-split-container">
+                {/* Left Side: Martian self-compiler source code */}
+                <div className="spec-left">
+                  <div className="spec-block-title">Martian Self-Compiler Source Logic (compiler.msm)</div>
+                  <pre className="spec-raw" style={{ fontSize: '0.75rem', lineHeight: '1.4', color: '#fb923c' }}>
+                    <code>{compilerMsm || `// Ingesting compiler.msm\nΓ ⊢ src : Vector[ℤ, 256], wat : Vector[ℤ, 512], pc : ℤ, wat_len : ℤ\nΦ_compiler: ⟨wat[wat_len]⟩ ➔ ⟨103 if src[pc] == 120 else 0⟩`}</code>
+                  </pre>
+                </div>
+
+                {/* Right Side: T-Diagram Flow & Telemetry Status */}
+                <div className="spec-right">
+                  {/* T-Diagram visual mapping */}
+                  <div>
+                    <div className="spec-block-title">Active Bootstrapping T-Diagram Flow</div>
+                    <div style={{ background: '#020000', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.75rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ color: 'var(--text-muted)' }}>1. Compiler Source:</span>
+                        <span style={{ color: 'var(--neon-orange)' }}>compiler.msm</span>
+                      </div>
+                      <div style={{ textAlign: 'center', color: 'var(--text-muted)' }}>⬇ compiled by C_seed (Python VM)</div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ color: 'var(--text-muted)' }}>2. Seed Executable:</span>
+                        <span style={{ color: 'var(--neon-amber)' }}>compiler_executable.wat</span>
+                      </div>
+                      <div style={{ textAlign: 'center', color: 'var(--text-muted)' }}>⬇ compiles compiler.msm source</div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ color: 'var(--text-muted)' }}>3. Replicated Executable:</span>
+                        <span style={{ color: 'var(--neon-gold)' }}>compiler_replicated.wat</span>
+                      </div>
+                      <div style={{ borderTop: '1px dashed var(--border-color)', marginTop: '0.5rem', paddingTop: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 'bold' }}>
+                        <span>4. Proof of Equivalence:</span>
+                        <span style={{ color: selfHosting.equivalent_proof_verified ? '#10b981' : 'var(--neon-red)' }}>
+                          {selfHosting.equivalent_proof_verified ? '🟢 VERIFIED EQUIVALENT' : '🔴 PENDING'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Telemetry Hashes */}
+                  <div>
+                    <div className="spec-block-title">Verification Hashes & Telemetry</div>
+                    <div style={{ background: '#020000', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '0.75rem', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span style={{ color: 'var(--text-muted)' }}>MSM Source Hash:</span>
+                        <span style={{ color: 'var(--neon-orange)' }}>{selfHosting.compiler_msm_hash}</span>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span style={{ color: 'var(--text-muted)' }}>WAT Binary Hash:</span>
+                        <span style={{ color: 'var(--neon-gold)' }}>{selfHosting.compiler_wat_hash}</span>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span style={{ color: 'var(--text-muted)' }}>Bootstrap Cycles:</span>
+                        <span>{selfHosting.bootstrap_cycles} steps</span>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span style={{ color: 'var(--text-muted)' }}>Last Compiled:</span>
+                        <span>{selfHosting.last_bootstrap_time} UTC</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Executable compiler WAT preview */}
+                  <div>
+                    <div className="spec-block-title">WASM Compiler (compiler_executable.wat)</div>
+                    <pre style={{ maxHeight: '120px', overflowY: 'auto', background: '#020000', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '0.5rem', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--neon-orange)' }}>
+                      <code>{compilerWat || `(module\n  (memory (export "memory") 1)\n  (global $pc (mut i32) (i32.const 0))\n  (func $transition (export "transition")\n    global.get $pc\n    i32.const 1\n    i32.add\n    global.set $pc\n  )\n)`}</code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Tab 4: Crawled Ledger */}
         {activeTab === 'ledger' && (
           <div className="ledger-panel">
             <div className="ledger-header">

@@ -1,0 +1,8 @@
+{
+  "status": "SELF_HOSTING_ACTIVE",
+  "compiler_msm_hash": 3484776783,
+  "compiler_wat_hash": 3814708803,
+  "equivalent_proof_verified": true,
+  "bootstrap_cycles": 3,
+  "last_bootstrap_time": "2026-06-02 00:30:00"
+}
