@@ -16,6 +16,8 @@ def register_file_association():
         if sys.platform != "win32":
             return
         import winreg
+        import ctypes
+        
         python_path = sys.executable
         # Try to use pythonw.exe to avoid console popup
         if python_path.endswith("python.exe"):
@@ -35,9 +37,22 @@ def register_file_association():
         winreg.SetValue(key_cmd, "", winreg.REG_SZ, f'"{python_path}" "{launcher_path}" "%1"')
         winreg.CloseKey(key_cmd)
         
-        print("[Registry] File association for .msm registered successfully.")
+        # 3. Clear Explorer UserChoice cache if present
+        try:
+            winreg.DeleteKey(winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.msm\UserChoice")
+        except FileNotFoundError:
+            pass
+            
+        # 4. Trigger Shell Association Refresh
+        try:
+            ctypes.windll.shell32.SHChangeNotify(0x08000000, 0, None, None)
+        except Exception:
+            pass
+            
+        print("[Registry] File association for .msm registered and shell refreshed successfully.")
     except Exception as e:
         print(f"[Registry Warning] Could not register file association: {e}")
+
 
 
 class MartianLauncherApp(tk.Tk):
